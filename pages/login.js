@@ -8,13 +8,29 @@ import {
   FormGroup,
   Row,
 } from "react-bootstrap";
+import { useRouter } from "next/router";
 
 export default function Login() {
+  const router = useRouter();
+
+  function handleLogin(e) {
+    // TODO: Lógica de login para o sistema
+    e.preventDefault();
+    /*
+      1. Verificar os dados inseridos
+      2. Enviar a requisição para o backend
+      3. Espera a resposta
+        3.1. Se existir erro, alertar ao usuário
+        3.2. Se a requisição estiver ok, salvar o token e vai pra proxima pagina
+    */
+    router.push("/categorias");
+  }
+
   return (
     <>
       <Container className="p-5">
         <Card>
-          <Form>
+          <Form onSubmit={handleLogin}>
             <h1 className="text-center">Entrar na sua loja</h1>
             <Form.Group className="p-2">
               <Form.Label>E-mail</Form.Label>
@@ -33,17 +49,12 @@ export default function Login() {
                 required
               />
             </Form.Group>
-            <Form.Group className="p-2">
-              <Row>
-                <Col>
-                  <Link href="/nova-conta">
-                    <a>Crie uma conta</a>
-                  </Link>
-                </Col>
-                <Col>
-                  <Button type="submit">Entrar</Button>
-                </Col>
-              </Row>
+            <Form.Group className="p-2 text-center">
+              <Button type="submit">Entrar no sistema</Button>
+              <br />
+              <Link href="/nova-conta">
+                <a>Crie uma conta</a>
+              </Link>
             </Form.Group>
           </Form>
         </Card>
