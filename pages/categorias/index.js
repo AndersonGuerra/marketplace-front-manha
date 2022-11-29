@@ -17,7 +17,7 @@ export default function Categorias() {
   const data = [];
 
   for (let i = 0; i < 10; i++) {
-    const hoje = new Date()
+    const hoje = new Date();
     data.push({
       name: `Categoria ${i}`,
       createdAt: hoje.toLocaleDateString(),
@@ -46,7 +46,7 @@ export default function Categorias() {
             </Link>
           </Col>
         </Row>
-        <ItemTable data={data} headers={headers} />
+        <ItemTable data={data} headers={headers} detailLink="categorias" />
       </Card>
     </>
   );
