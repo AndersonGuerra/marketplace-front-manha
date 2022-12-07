@@ -20,6 +20,17 @@ export default function CadastrarProduto() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    const produto = await productService.createProduct({
+      name,
+      price,
+      category,
+    });
+    if (produto.id) {
+      alert("Produto criado com sucesso");
+      router.push("/produtos");
+    } else {
+      alert("Falha ao criar produto, tente novamente");
+    }
   }
 
   return (

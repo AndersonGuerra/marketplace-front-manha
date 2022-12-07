@@ -10,9 +10,13 @@ export default {
     return result.data;
   },
   async createProduct(data) {
-    data.createdAt = new Date().toLocaleString();
-    data.image = "https://i.dummyjson.com/data/products/4/thumbnail.jpg";
-    const result = await api.post("/products", data);
+    const result = await api.post("/products", {
+      image: "https://i.dummyjson.com/data/products/4/thumbnail.jpg",
+      name: data.name,
+      category: data.category,
+      price: data.price,
+      createdAt: new Date().toLocaleString(),
+    });
     return result.data;
   },
 };
