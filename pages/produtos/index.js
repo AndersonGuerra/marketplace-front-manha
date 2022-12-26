@@ -13,8 +13,11 @@ import {
 import * as Icon from "react-bootstrap-icons";
 import ItemTable from "../../components/ItemTable";
 import productService from "../../services/product.service";
+import useAuth from "../../hooks/useAuth";
 
 export default function Produtos() {
+  useAuth();
+  
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -42,7 +45,12 @@ export default function Produtos() {
             </Link>
           </Col>
         </Row>
-        <ItemTable data={data} headers={headers} detailLink="produtos" />
+        <ItemTable
+          data={data}
+          headers={headers}
+          detailLink="produtos"
+          editLink="produtos/editar"
+        />
       </Card>
     </>
   );

@@ -9,11 +9,19 @@ import {
   Row,
 } from "react-bootstrap";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import authService from "../services/auth.service";
+import { useAuthContext } from "../context/auth.context";
 
 export default function Login() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isAuth, setIsAuth] = useAuthContext();
 
-  function handleLogin(e) {
+  if (isAuth) router.push("/categorias");
+
+  async function handleLogin(e) {
     // TODO: Lógica de login para o sistema
     e.preventDefault();
     /*
@@ -23,7 +31,17 @@ export default function Login() {
         3.1. Se existir erro, alertar ao usuário
         3.2. Se a requisição estiver ok, salvar o token e vai pra proxima pagina
     */
-    router.push("/categorias");
+    try {
+      await authService.login({
+        email,
+        password,
+      });
+      setIsAuth(true);
+      router.push("/categorias");
+    } catch (erro) {
+      console.log(erro);
+      alert("Falha ao autenticar, por favor tente novamente");
+    }
   }
 
   return (
@@ -38,6 +56,8 @@ export default function Login() {
                 type="email"
                 placeholder="Insira o seu e-mail"
                 required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Form.Group>
             <Form.Group className="p-2">
@@ -47,6 +67,8 @@ export default function Login() {
                 placeholder="Insira a sua senha"
                 minLength={8}
                 required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </Form.Group>
             <Form.Group className="p-2 text-center">

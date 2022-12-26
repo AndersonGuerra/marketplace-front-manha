@@ -17,20 +17,27 @@ export default function EditarProduto() {
 
   useEffect(() => {
     categoryService.getCategories().then((r) => setCategoryList(r));
-  }, []);
+    if (id) {
+      productService.getProduct(id).then((r) => {
+        setName(r.name);
+        setPrice(r.price);
+        setCategory(r.category);
+      });
+    }
+  }, [id]);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const produto = await productService.createProduct({
+    const produto = await productService.updateProduct({
       name,
       price,
       category,
-    });
+    }, id);
     if (produto.id) {
-      alert("Produto criado com sucesso");
+      alert("Produto editado com sucesso");
       router.push("/produtos");
     } else {
-      alert("Falha ao criar produto, tente novamente");
+      alert("Falha ao editar produto, tente novamente");
     }
   }
 
